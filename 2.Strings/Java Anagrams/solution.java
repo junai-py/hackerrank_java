@@ -1,36 +1,47 @@
-import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
 public class Solution {
-    //  Time Complexity: O(n) using a HashMap
-    // Space Complexity: O(n)
-    static boolean isAnagram(String a, String b) {
-        if (a == null || b == null || a.length() != b.length()) {
-            return false;
-        }
-        a = a.toLowerCase();
-        b = b.toLowerCase();
-        HashMap<Character, Integer> map = new HashMap<>();
-        
-        /* Fill HashMap with 1st String */
-        for (int i = 0; i < a.length(); i++) {
-            char ch = a.charAt(i);
-            map.merge(ch, 1, Integer::sum);
-        }
-        
-        /* Compare 2nd String to 1st String's HashMap */
-        for (int i = 0; i < b.length(); i++) {
-            char ch = b.charAt(i);
-            if (map.containsKey(ch) && map.get(ch) > 0) {
-                map.put(ch, map.get(ch) - 1);
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
 
-  public static void main(String[] args) {
+    static boolean isAnagram(String a, String b) {
+        char [] ch1 = a.toLowerCase().toCharArray();
+        char [] ch2 = b.toLowerCase().toCharArray();
+        ch1=sort(ch1);
+        ch2=sort(ch2);
+        int count=0,i=0;
+        if(ch1.length==ch2.length)
+        {
+            while( i<=ch1.length-1 && (ch1[i]==ch2[i]))
+            {
+                count++;
+                i++;
+            }
+            if(count==ch1.length)
+                return true;
+            else
+                return false;
+
+        }
+        else
+            return false;
+        
+    }
+    public static char [] sort(char [] arr)
+        {
+            for (int i = 0; i < arr.length-1; i++) 
+                for (int j = 0; j < arr.length-i-1; j++) 
+                    if (arr[j] > arr[j+1]) 
+                    { 
+                    // swap arr[j+1] and arr[i] 
+                    char temp = arr[j]; 
+                    arr[j] = arr[j+1]; 
+                    arr[j+1] = temp; 
+                    }         
+            return arr;
+        }
+    
+
+    public static void main(String[] args) {
+    
         Scanner scan = new Scanner(System.in);
         String a = scan.next();
         String b = scan.next();
